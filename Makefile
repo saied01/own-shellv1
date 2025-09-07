@@ -8,7 +8,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -g
 
 # Archivos fuente
-SRC = shell.c utils.c
+SRC = shell.c utils.c builtin.c
 
 # Archivos objeto (se generan automáticamente)
 OBJ = $(SRC:.c=.o)
