@@ -55,19 +55,19 @@ pid_t fork_wrapper()
 }
 
 
-//void execvp_wrapper(const char *file, char const *argv[])
-//{
-//    if (!file || !argv)
-//    {
-//        fprintf(stderr, RED"invalid arguments\n"RST);
-//        exit(EXIT_FAILURE);
-//    }
-//    if (execvp(file, argv) == -1)
-//    {
-//        perror(RED"exec failed"RST);
-//        exit(EXIT_FAILURE);
-//    }
-//}
+void execvp_wrapper(const char *file, char *argv[])
+{
+    if (!file || !argv)
+    {
+        fprintf(stderr, RED"invalid arguments\n"RST);
+        exit(EXIT_FAILURE);
+    }
+    if (execvp(file, argv) == -1)
+    {
+        perror(RED"exec failed"RST);
+        exit(EXIT_FAILURE);
+    }
+}
 
 
 

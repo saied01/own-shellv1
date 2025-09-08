@@ -1,7 +1,7 @@
 #include "shell.h"
 
 
-int status = 0;
+int *status = 0;
 
 
 
@@ -25,10 +25,19 @@ t_builtin g_builtin[] =
 
 void shell_launch(char **args)
 {
+
+    pid_t result;
+
     if (fork_wrapper() == 0)
-        execvp(args[0], args);
+        execvp_wrapper(args[0], args);
     else
-        wait(NULL);
+        result = wait(&status);
+    if (result == -1)
+        perror("wait failed");
+    if (WIFEXITED(*status))
+        *status = WEXITSTATUS(*status);
+    
+    return result;
         
 }
 
@@ -42,7 +51,7 @@ void shell_exec(char **args)
     i = 0;
     while ((curr = g_builtin[i].builtin_name))
     {
-        if (strcmp(curr, args[0]))
+        if (strcmp(curr, args[0]) == 0)
         {
             status = g_builtin[i].foo(args);
             return;

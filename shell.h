@@ -32,7 +32,7 @@ void *malloc_wrapper(size_t);
 void *realloc_wrapper(void *, size_t);
 int shell_exit(char **);
 int shell_env(char **);
-void execvp_wrapper(const char *, char const *);
+void execvp_wrapper(const char *, char **args);
 pid_t fork_wrapper();
 
 #endif
