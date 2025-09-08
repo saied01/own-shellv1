@@ -41,7 +41,33 @@ void *realloc_wrapper(void *ptr, size_t size)
 }
 
 
+pid_t fork_wrapper()
+{
+    pid_t pid = fork();
 
+    if (pid == -1)
+    {
+        perror(RED"fork failed"RST);
+        exit(EXIT_FAILURE);
+    }
+
+    return pid;
+}
+
+
+//void execvp_wrapper(const char *file, char const *argv[])
+//{
+//    if (!file || !argv)
+//    {
+//        fprintf(stderr, RED"invalid arguments\n"RST);
+//        exit(EXIT_FAILURE);
+//    }
+//    if (execvp(file, argv) == -1)
+//    {
+//        perror(RED"exec failed"RST);
+//        exit(EXIT_FAILURE);
+//    }
+//}
 
 
 

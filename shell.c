@@ -1,31 +1,55 @@
 #include "shell.h"
 
+
+int status = 0;
+
+
+
+
+
 // if function is builtin call it 
 // (basic functions to call, can add more)
 t_builtin g_builtin[] =
 {
-    {.builtin_name="echo", .foo=shell_echo};
-    {.builtin_name="env", .foo=shell_env};
-    {.builtin_name="exit", .foo=shell_exit};
-    {.builtin_name="NULL"};
-}
+//  {.builtin_name="echo", .foo=shell_echo},
+    {.builtin_name="env", .foo=shell_env},
+    {.builtin_name="exit", .foo=shell_exit},
+    {.builtin_name="NULL"},
+};
+// for rest of builtins,
+// could add every builtin and make pointer to already implemented function
 
 
 // 3 - exec
 // fork+execvp+wait
+
+void shell_launch(char **args)
+{
+    if (fork_wrapper() == 0)
+        execvp(args[0], args);
+    else
+        wait(NULL);
+        
+}
+
+
+
 void shell_exec(char **args)
 {
     int i;
+    const char *curr;
 
     i = 0;
     while ((curr = g_builtin[i].builtin_name))
     {
         if (strcmp(curr, args[0]))
         {
-            g_builtin[i].foo(args);
+            status = g_builtin[i].foo(args);
             return;
         }
+        ++i;
     }
+    shell_launch(args);
 }
 
 

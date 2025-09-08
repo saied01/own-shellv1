@@ -30,6 +30,9 @@ void getcwd_wrapper(char *, size_t);
 void printbanner();
 void *malloc_wrapper(size_t);
 void *realloc_wrapper(void *, size_t);
-void shell_exit(char **);
+int shell_exit(char **);
+int shell_env(char **);
+void execvp_wrapper(const char *, char const *);
+pid_t fork_wrapper();
 
 #endif
