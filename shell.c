@@ -1,7 +1,7 @@
 #include "shell.h"
 
 
-int *status = 0;
+int status = 0;
 
 
 
@@ -23,7 +23,7 @@ t_builtin g_builtin[] =
 // 3 - exec
 // fork+execvp+wait
 
-void shell_launch(char **args)
+pid_t shell_launch(char **args)
 {
 
     pid_t result;
@@ -34,8 +34,8 @@ void shell_launch(char **args)
         result = wait(&status);
     if (result == -1)
         perror("wait failed");
-    if (WIFEXITED(*status))
-        *status = WEXITSTATUS(*status);
+    if (WIFEXITED(status))
+        status = WEXITSTATUS(status);
     
     return result;
         
@@ -73,7 +73,7 @@ char **cell_split_line(char *line)
     size_t bufsize;
 
     bufsize = BUFSIZ;
-    tokens = malloc_wrapper(BUFSIZ * sizeof(tokens));
+    tokens = malloc_wrapper(BUFSIZ * sizeof(char *));
     position = 0;
 
     // strtok() --> return a pointer to the next token, or NULL if
